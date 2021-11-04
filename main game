@@ -19,28 +19,28 @@ def display_board(board):
 #step 2: Take player input and assign the marker either to X or O
 
 def player_input():
-    marker=''
+    marker = '' #first assign the marker to the space to ask for the assignment that the player wants to make
     
-    while not (marker=='X' or marker=='O'):
-        marker=input('Which letter you want to play with X or O? ')
+    while not (marker=='X' or marker=='O'):   # this line will insure that only X or O can be chosen to play the game
+        marker=input('Which letter you want to play with X or O? ') # the user put his input to play the game
         
-        if not (marker=='X' or marker=='O'):
+        if not (marker=='X' or marker=='O'):  # this line insures that if the user chase the wrong letter the question regarding the input will be asked again
             print('Sorry you can choose only X or O')
             
-    if marker=='X':
+    if marker=='X':     # if player chase X, then the following combination will be played (X,O)
         return ('X','O')
-    else:
+    else:		# if O, then the (O,X) combination will be played 
         return ('O','X')
 				
 #step 3: Assign the marker to the board
 
-def place_marker(board, marker, position):
+def place_marker(board, marker, position):  #by applying this function the user can place its marker on the desired place on the board
     
-    board[position]=marker
+    board[position]=marker   
 
 #step 4: Check if the player won
 
-def win_check(board, mark):
+def win_check(board, mark):      # this function insures which combinations win the game. All possible combinations are presented inside the function
     return((board[1]==mark and board[2]==mark and board[3]==mark) or 
            (board[4]==mark and board[5]==mark and board[6]==mark) or 
            (board[7]==mark and board[8]==mark and board[9]==mark) or 
@@ -52,62 +52,62 @@ def win_check(board, mark):
 					 
 # step 5: Random assignment of which of the players go first
 
-import random
+import random #importing the library
 
-def choose_first():
-    player=random.randint(1,2)
-    if player==1:
+def choose_first():   # function which chooses which player will go first
+    player=random.randint(1,2)  # random assignment of either 1 or 2 
+    if player==1:    # if the random number chosen is 1 then the player 1 will go first, otherwise the 2 player
         print('The player 1 goes first!')
     else:
-        print('The player 2 goes first!')
+     	print('The player 2 goes first!')
 
 # step 6: Function that checks if the space on the board available
 
 def space_check(board, position):
-    return board[position]==" "
+    return board[position]==" " #returns True if the space availble on the board, False otherwise
 		
 #step 7: Checks if the board is full, True if full and False if empty
 
 def full_board_check(board):
-    for i in range(1,10):
-        if space_check(board,i):
-            return False
-    return True
+    for i in range(1,10):  
+        if space_check(board,i):   # for cells from 1 to 9 the check on the available space is done, if return True, means that there is available space on the board.
+            return False  # returns False as there is available space, that means that the board is not full
+    return True  # if the space_check is False, then it means that the board is full, that is why the True is returned
 
 #step 8: Function that asks for the players next position
 
 def player_choice(board):
     position=0
-    while position not in [1,2,3,4,5,6,7,8,9] and not space_check(board, position):
-        position=int(input('Choose the position between 1-9: '))
+    while position not in [1,2,3,4,5,6,7,8,9] and not space_check(board, position): # asks for the user input to choose which cell she/he wants to occupy on the board
+        position=int(input('Choose the position between 1-9: ')) #can choose between 1-9, if the input is out of this range or cell occupied the function asks for a user input again
     
-    return int(position)
+    return int(position)  # returns the position that the user chase
 		
 #step 9: Function that asks if players want to play one more time.
 
 def replay():
     new_game=' '
-    while not (new_game=='yes' or new_game=='no'):
+    while not (new_game=='yes' or new_game=='no'): # if the player do not choose yes or no the question regarding input will be asked again
         
-        new_game=input('Do you want to play one more game, yes or no? ')
+        new_game=input('Do you want to play one more game, yes or no? ') 
     
         if not (new_game=='yes' or new_game=='no'):
             print('Sorry, you can choose only between yes or no')
     
-    if new_game=='yes':
+    if new_game=='yes': # the game played one more time
         return True
     else:
-        return False
+        return False  # the game is finished and not played again
 				
-#step 10: Logic of the game
+#step 10: Logic of the game, the main body of the game
 
-print('Welcome to Tic Tac Toe!')
+print('Welcome to Tic Tac Toe!')  # prints Welcome to Tic Tac Toe game as the first sentence of the game
 
 while True:
     #create var's that we need for the game
-    The_board=10*[' ']
-    Player1, Player2=player_input()
-    turn=choose_first()
+    The_board=10*[' ']   # the board is created
+    Player1, Player2=player_input()  # Player 1 or 2 chooses who will play with X or O
+    turn=choose_first()  #randomly selected who will play first
     print(turn)
     game_start=input('Do you want to play the game? ')
         
@@ -117,28 +117,28 @@ while True:
         game_on=False
     
     
-    while game_on:
+    while game_on:    # while game is true, the game is played
         
         #player 1 turn 
-        if turn=='Player 1':
-            display_board(The_board)
+        if turn=='Player 1':    # if the random function chase player 1 play first
+            display_board(The_board)  # the board of the game is presented
         
-            position=player_choice(The_board)
+            position=player_choice(The_board) # the position is chosen by player 1 
         
-            place_marker(The_board,Player1,position)
+            place_marker(The_board,Player1,position) # the Player 1's marker is placed on the board
         
-            if win_check(The_board, Player1):
-                display_board(The_board)
-                print('Player 1 has won, congratulations!')
-                game_on=False
-            else:
-                if full_board_check(The_board):
-                    display_board(The_board)
+            if win_check(The_board, Player1): # if one of the conditions to win the game is met, then Player 1 won the game
+                display_board(The_board) # the final board is presented 
+                print('Player 1 has won, congratulations!') 
+                game_on=False # game ended
+            else:			# if the conditions to win the game not met
+                if full_board_check(The_board):    # check if the board is full, if True then the game is finished in draw
+                    display_board(The_board)	# show the final board 
                     print("You ended the game in draw guys!")
                     break
                 else:
-                    turn='Player 2'
-         #player 2 turn            
+                    turn='Player 2'  # if the board is still empty then the game continues and Player 2 makes the next move
+         #player 2 turn the same logic works for Player 2 as for Player 1       
         else:
             display_board(The_board)
         
@@ -158,7 +158,7 @@ while True:
                 else:
                     turn='Player 1'
                     
-    if not replay():
+    if not replay():  # if players do not want to play one more time, then the game is finished and not played one more time
         break
 
 
